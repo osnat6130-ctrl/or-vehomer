@@ -1,0 +1,2345 @@
+/* אור וחומר — סטודיו לקרמיקה — עיצוב משותף לכל העמודים */
+
+:root {
+  --cream-bg:   #FAF6EF;
+  --ceramic:    #E8DCC4;
+  --sand:       #D8C0A8;
+  --gold:       #B0803A;
+  --terracotta: #9C5A2E;
+  --clay-dark:  #4A3B2E;
+  --white:      #FFFFFF;
+
+  --font-body: "Google Sans", "Assistant", "Heebo", system-ui, sans-serif;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-soft: 0 2px 12px rgba(74, 59, 46, 0.08);
+  --max-width: 1120px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--clay-dark);
+  background: var(--cream-bg);
+}
+/* כפתורים ושדות לא יורשים גופן כברירת מחדל – מכריחים Google Sans בכל האתר */
+button, input, select, textarea, summary, optgroup {
+  font-family: var(--font-body);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+[hidden] { display: none !important; }
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.6em;
+  color: var(--terracotta);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.1rem); }
+h3 { font-size: 1.25rem; font-weight: 600; }
+
+p { margin: 0 0 1em; }
+
+a {
+  color: var(--terracotta);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.15s ease;
+}
+a:hover { text-decoration-color: currentColor; }
+
+/* focus visible - נגישות */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Skip to content */
+.skip-link {
+  position: absolute;
+  right: 12px;
+  top: -60px;
+  background: var(--terracotta);
+  color: var(--white);
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 12px; }
+
+/* ===== Header / Nav ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: var(--cream-bg);
+  border-bottom: 1px solid var(--ceramic);
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+/* דף הבית: ה-header צף מעל ההירו, שקוף-כהה בצבע ההירו, והופך לקרם בגלילה (main.js מוסיף/מסיר is-transparent) */
+.has-hero .site-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+.has-hero .hero-v2 { padding-top: 70px; }
+.site-header.is-transparent {
+  background: transparent;
+  border-bottom-color: transparent;
+}
+.site-header.is-transparent .logo-text,
+.site-header.is-transparent .nav-menu a {
+  color: var(--cream-bg);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+.site-header.is-transparent .nav-menu a[aria-current="page"] { color: var(--cream-bg); }
+.site-header.is-transparent .nav-menu a:hover { color: var(--white); background: none; }
+.site-header.is-transparent .nav-menu a::after { background: var(--white); }
+.site-header.is-transparent .nav-toggle {
+  color: var(--cream-bg);
+  border-color: rgba(250, 246, 239, 0.5);
+}@media (max-width: 899px) {
+  .site-header.is-transparent .nav-menu {
+    background: rgba(59, 46, 35, 0.96);
+    border-top-color: rgba(250, 246, 239, 0.15);
+  }
+}
+html.a11y-high-contrast .site-header.is-transparent { background: #000; }
+
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.nav-bar nav { flex-basis: 100%; order: 3; }
+@media (min-width: 900px) {
+  /* לוגו | תפריט ממורכז | עמודה ריקה – כדי שהתפריט יהיה במרכז האמיתי של המסך */
+  .nav-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+  .nav-bar nav { flex-basis: auto; order: 0; justify-self: center; }
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.logo-link img { height: 56px; width: auto; }
+/* השם כבר בתוך הלוגו – הטקסט מוצג רק אם קובץ הלוגו חסר (main.js מוסיף logo-missing) */
+.logo-text {
+  display: none;
+  font-weight: 700;
+  color: var(--terracotta);
+  font-size: 1.1rem;
+}
+.logo-link.logo-missing .logo-text { display: inline; }
+
+.nav-toggle {
+  background: none;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--clay-dark);
+}
+@media (min-width: 900px) {
+  .nav-toggle { display: none; }
+}
+
+.nav-menu {
+  list-style: none;
+  margin: 0;
+  padding: 16px 20px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--cream-bg);
+  border-top: 1px solid var(--ceramic);
+}
+.nav-menu.is-open { display: flex; }
+
+.nav-menu a {
+  display: block;
+  padding: 7px 10px;
+  text-decoration: none;
+  color: var(--clay-dark);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius);
+}
+/* עמוד נוכחי – צבע בלבד, בלי רקע */
+.nav-menu a[aria-current="page"] { color: var(--terracotta); }
+/* מעבר עכבר – צבע ופס תחתון ישר ודק מתחת לטקסט, בלי ריבוע */
+.nav-menu a { position: relative; }
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  inset-inline: 10px;
+  bottom: 4px;
+  height: 2px;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.nav-menu a:hover { color: var(--terracotta); }
+.nav-menu a:hover::after { opacity: 1; }
+
+@media (min-width: 900px) {
+  .nav-menu {
+    display: flex !important;
+    flex-direction: row;
+    padding: 0;
+    background: none;
+    border: none;
+    gap: 6px;
+  }
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--terracotta);
+  color: var(--white);
+}
+.btn-primary:hover { box-shadow: var(--shadow-soft); }
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+.btn-secondary:hover { background: var(--ceramic); }
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--white);
+}
+
+/* כפתור בירוק הרשמי של וואטסאפ */
+.btn-whatsapp {
+  background: #25D366;
+  color: var(--white);
+}
+.btn-whatsapp:hover { background: #1EBE5A; box-shadow: var(--shadow-soft); }
+/* אייקון וואטסאפ בכל כפתורי הפעולה הירוקים (בצד שמאל של הטקסט, כמו אייקון הטלפון בכותרת) */
+.btn-whatsapp::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 1.15em;
+  height: 1.15em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.69 8.23-8.23 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m.01 1.67c4.54 0 8.23 3.7 8.23 8.24 0 4.54-3.69 8.23-8.23 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+html.a11y-high-contrast .btn-whatsapp { background: #000; color: #fff; }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* ===== Sections ===== */
+.section { padding: 56px 0; }
+.section-ceramic { background: var(--ceramic); }
+.section-narrow { max-width: 760px; margin: 0 auto; text-align: center; }
+
+.eyebrow {
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+/* ===== Hero (index) ===== */
+.hero {
+  display: grid;
+  gap: 24px;
+  padding: 32px 0 48px;
+}
+.hero-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 246, 239, 0.28);
+}
+.hero-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.hero-title {
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  color: var(--terracotta);
+  margin-bottom: 0.15em;
+}
+.hero-subtitle {
+  color: var(--clay-dark);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.6em;
+}
+.hero-tagline {
+  color: var(--gold);
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin-bottom: 0.8em;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+/* ===== Hero v2 (דף הבית) ===== */
+.hero-v2 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(560px, 88vh, 840px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--cream-bg);
+  background:
+    radial-gradient(120% 80% at 85% 20%, rgba(176, 128, 58, 0.22), transparent 60%),
+    linear-gradient(160deg, #3B2E23 0%, #4A3B2E 50%, #6E4A31 100%);
+}
+.hero-v2-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 55%;
+  z-index: -2;
+}
+/* בדסקטופ: התמונה בכיוונה המקורי – הידיים והקערה בצד שמאל, הרקע השקט מימין מאחורי הטקסט */
+@media (min-width: 900px) {
+  .hero-v2-bg { transform: scale(1.04); }
+}
+/* התמונה בהירה (ידיים על האובניים) – מכהים בעיקר את הצד הימני (מאחורי הטקסט) ואת התחתית (מאחורי הפס),
+   ומשאירים את הידיים גלויות באמצע-שמאל */
+.hero-v2-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, rgba(59, 46, 35, 0.82) 0%, rgba(59, 46, 35, 0.4) 38%, rgba(59, 46, 35, 0.08) 100%),
+    linear-gradient(to right, transparent 34%, rgba(59, 46, 35, 0.32) 62%, rgba(59, 46, 35, 0.62) 100%);
+}
+
+/* המיכל של ההירו מיושר לאותו קו של שאר העמוד (הכרטיסים וכו') */
+.hero-v2 .container {
+  width: 100%; /* בתוך flex-column, בלי זה המיכל מתכווץ לרוחב התוכן ומתמרכז */
+}
+.hero-v2-inner {
+  position: relative;
+  flex: 1;
+  display: grid;
+  gap: 28px;
+  align-content: end;
+  padding-top: 72px;
+  padding-bottom: 28px;
+}
+@media (min-width: 900px) {
+  .hero-v2-inner {
+    padding-top: 96px;
+  }
+}
+
+/* כפתור התקשרות ב-header (צד שמאל, מול הלוגו) */
+.header-cta {
+  padding: 9px 16px;
+  font-size: 0.95rem;
+  gap: 8px;
+  white-space: nowrap;
+  margin-inline-start: auto; /* במובייל: נצמד לכפתור התפריט בצד שמאל */
+  margin-inline-end: 8px;
+}
+@media (min-width: 900px) {
+  .header-cta {
+    justify-self: end; /* העמודה השמאלית בגריד של ה-header */
+    margin: 0;
+  }
+}
+
+.hero-v2-kicker {
+  color: var(--ceramic);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.hero-v2-title {
+  position: relative;
+  color: var(--cream-bg);
+  font-size: clamp(4.2rem, 14vw, 10.5rem);
+  line-height: 0.9;
+  margin: 0 0 0.22em;
+  padding-top: 0.28em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.02em;
+}
+/* קו זהב דק + נקודה מעל הכותרת */
+.hero-v2-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0.04em;
+  width: 2.2em;
+  height: 2px;
+  background: linear-gradient(to left, var(--gold), rgba(176, 128, 58, 0));
+}
+.hero-v2-title::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  right: 0.04em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(176, 128, 58, 0.25);
+}
+.title-word { display: block; }
+.title-light {
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--cream-bg);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
+}
+.title-bold {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-right: 0.18em;
+  background: linear-gradient(105deg, #F3E3C3 0%, var(--gold) 45%, #D9A85A 70%, var(--sand) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 3px 18px rgba(0, 0, 0, 0.35));
+}
+html.a11y-high-contrast .title-bold {
+  background: none;
+  color: #fff;
+  filter: none;
+}
+.hero-v2-tagline {
+  color: var(--gold);
+  font-size: clamp(1.45rem, 3vw, 2.1rem);
+  font-weight: 600;
+  margin-bottom: 1.1em;
+}
+.hero-v2 .btn-row { margin-top: 0; }
+
+.btn-ghost {
+  background: rgba(250, 246, 239, 0.08);
+  border-color: rgba(250, 246, 239, 0.65);
+  color: var(--cream-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.btn-ghost:hover { background: rgba(250, 246, 239, 0.18); }
+
+.hero-v2-bar {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  padding: 20px 22px;
+  margin-bottom: 28px;
+  border-radius: var(--radius-lg);
+  background: rgba(250, 246, 239, 0.11);
+  border: 1px solid rgba(250, 246, 239, 0.22);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+}
+.hero-v2-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
+}
+.hero-v2-facts li { display: flex; flex-direction: column; gap: 2px; }
+.fact-label {
+  font-size: 0.78rem;
+  color: var(--ceramic);
+  letter-spacing: 0.06em;
+}
+.fact-value { font-weight: 700; color: var(--cream-bg); }
+/* שני הכפתורים זה לצד זה בשורה אחת – גם במובייל */
+.hero-v2-bar-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.hero-v2-bar-actions .btn {
+  width: 100%;
+  justify-content: center;
+  padding: 11px 10px;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+@media (min-width: 900px) {
+  .hero-v2-bar { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 32px; }
+  /* ארבע עובדות בעמודות שוות, ושני כפתורים ברוחב זהה – פריסה סימטרית */
+  .hero-v2-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 14px; }
+  .hero-v2-facts li .fact-value { font-size: 0.92rem; white-space: nowrap; }
+  .hero-v2-facts li .fact-label { font-size: 0.74rem; }
+  .hero-v2-bar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    min-width: 330px;
+  }
+  .hero-v2-bar-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 12px;
+    font-size: 0.95rem;
+    gap: 6px;
+  }
+  .hero-v2-bar-actions .btn-whatsapp::after { width: 1em; height: 1em; }
+  .hero-v2-facts { grid-template-columns: repeat(4, auto); gap: 0 40px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-v2-copy > *,
+  .hero-v2-bar { animation: hero-rise 0.7s ease both; }
+  .hero-v2-copy > :nth-child(2) { animation-delay: 0.08s; }
+  .hero-v2-copy > :nth-child(3) { animation-delay: 0.16s; }
+  .hero-v2-copy > :nth-child(4) { animation-delay: 0.24s; }
+  .hero-v2-bar { animation-delay: 0.32s; }
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ===== Masthead – פתיחה טיפוגרפית לעמודים פנימיים (בלי תמונת רקע, שונה מההירו) ===== */
+.masthead {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 44px 0 40px;
+  background: var(--cream-bg);
+  border-bottom: 1px solid var(--ceramic);
+}
+/* תמונה שממלאת בדיוק את המלבן של הפתיחה – בצבע מלא, בלי הבהרה */
+.masthead-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+/* לוח קרם שקוף-למחצה מאחורי הטקסט – רואים את התמונה מבעדו */
+.masthead-intro {
+  position: relative;
+  z-index: 1;
+  max-width: 40em;
+  margin: 0 auto;
+  padding: 26px 28px 28px;
+  border-radius: var(--radius-lg);
+  background: rgba(250, 246, 239, 0.72);
+  border: 1px solid rgba(250, 246, 239, 0.6);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  box-shadow: 0 10px 30px rgba(74, 59, 46, 0.16);
+}
+html.a11y-high-contrast .masthead-photo { display: none; }
+html.a11y-high-contrast .masthead-intro {
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.masthead-grid {
+  display: grid;
+  gap: 36px;
+  align-items: start;
+}
+.masthead-intro { text-align: center; }
+.masthead-title {
+  font-size: clamp(1.9rem, 4.2vw, 2.8rem);
+  line-height: 1.15;
+  color: var(--terracotta);
+  margin: 0 0 20px;
+  position: relative;
+  padding-bottom: 18px;
+}
+.masthead-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  width: 56px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+.masthead-lead {
+  font-size: 1.08rem;
+  max-width: 32em;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .masthead { padding: 64px 0 56px; }
+}
+/* דף הסדנאות: הכותרת בלבן, עם צל עדין לקריאות מעל הפאנל השקוף */
+.masthead--sadnaot .masthead-title {
+  color: var(--white);
+  text-shadow: 0 2px 14px rgba(59, 46, 35, 0.45), 0 1px 2px rgba(59, 46, 35, 0.35);
+}
+.masthead--sadnaot .masthead-lead {
+  color: var(--white);
+  font-weight: 500;
+  text-shadow: 0 1px 10px rgba(59, 46, 35, 0.45), 0 1px 2px rgba(59, 46, 35, 0.35);
+}
+html.a11y-high-contrast .masthead-title,
+html.a11y-high-contrast .masthead-lead { color: #000; text-shadow: none; }
+
+html.a11y-high-contrast .hero-v2 { background: #000; color: #fff; }
+html.a11y-high-contrast .hero-v2-bg,
+html.a11y-high-contrast .hero-v2-overlay { display: none; }
+html.a11y-high-contrast .hero-v2-title,
+html.a11y-high-contrast .hero-v2-tagline,
+html.a11y-high-contrast .hero-v2 a,
+html.a11y-high-contrast .fact-value,
+html.a11y-high-contrast .fact-label,
+html.a11y-high-contrast .hero-v2-kicker { color: #fff; }
+
+/* ===== Cards ===== */
+.card-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .card-grid-2 { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+}
+.card img { aspect-ratio: 4 / 3; object-fit: cover; }
+.card-body {
+  padding: 18px 20px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-body h3 { margin-bottom: 0.4em; }
+.card-body p { margin-bottom: 0.8em; color: var(--clay-dark); }
+/* הקישור נדחף לתחתית הכרטיס – כל הקישורים באותו קו */
+.card-link {
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* כרטיס שכולו קישור (דף הבית – "בחרו את המסלול שלכם") + אפקט ריחוף */
+.card--link {
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  will-change: transform;
+}
+.card--link img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.card--link .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--terracotta);
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.card--link .card-arrow {
+  color: var(--gold);
+  transition: transform 0.25s ease;
+}
+.card--link:hover,
+.card--link:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 44px rgba(74, 59, 46, 0.18);
+}
+.card--link:hover img,
+.card--link:focus-visible img { transform: scale(1.06); }
+.card--link:hover .card-link,
+.card--link:focus-visible .card-link { border-color: var(--gold); }
+.card--link:hover .card-arrow,
+.card--link:focus-visible .card-arrow { transform: translateX(-5px); }
+.card--link:focus-visible { outline: 3px solid var(--terracotta); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .card--link, .card--link img, .card--link .card-arrow { transition: none; }
+  .card--link:hover, .card--link:focus-visible { transform: none; }
+  .card--link:hover img, .card--link:focus-visible img { transform: none; }
+}
+html.a11y-stop-motion .card--link:hover { transform: none; }
+html.a11y-stop-motion .card--link:hover img { transform: none; }
+
+/* ===== Intro – "לאן הגעתם" (דף הבית) ===== */
+.intro {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 0 48px;
+  background:
+    radial-gradient(70% 90% at 10% 100%, rgba(232, 220, 196, 0.7), transparent 65%),
+    var(--cream-bg);
+}
+.intro-grid {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+.intro-kicker {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  margin: 0 0 12px;
+}
+.intro-title {
+  font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+  line-height: 1.12;
+  margin: 0 0 18px;
+  position: relative;
+  padding-bottom: 18px;
+}
+.intro-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 64px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+.intro-lead {
+  font-size: 1.12rem;
+  max-width: 34em;
+  margin: 0 0 22px;
+}
+
+/* אריחי מספרים */
+.intro-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-rows: 1fr; /* שלושת האריחים באותו גובה ובאותו קו */
+  gap: 14px;
+}
+.intro-stats li {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  background: var(--white);
+  border: 1px solid rgba(216, 192, 168, 0.55);
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(74, 59, 46, 0.07);
+}
+.stat-num {
+  flex: 0 0 auto;
+  min-width: 2.1em;
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--terracotta);
+}
+.stat-label {
+  font-weight: 600;
+  line-height: 1.35;
+}
+/* אריח "ללא הגבלת משתתפים" – אייקון קבוצה במקום סימן אינסוף */
+.stat-icon { display: inline-flex; align-items: center; justify-content: center; }
+.stat-icon svg { width: 2.4rem; height: 2.4rem; }
+@media (min-width: 900px) {
+  .intro { padding: 80px 0 72px; }
+  .intro-grid { grid-template-columns: 1.25fr 1fr; gap: 64px; }
+}
+html.a11y-high-contrast .intro-stats li { border-color: #000; }
+
+/* ===== Meet – "נעים מאוד" (דף הבית) ===== */
+.meet {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 0;
+  background:
+    radial-gradient(55% 75% at 22% 45%, rgba(232, 220, 196, 0.75), transparent 65%),
+    var(--cream-bg);
+}
+.meet-grid {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+.meet-figure {
+  position: relative;
+  margin: 0 auto;
+  width: min(100%, 400px);
+  order: -1; /* במובייל התמונה קודם */
+}
+.meet-figure img:first-child {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 200px 200px 26px 26px; /* קשת – מהדהדת את צורת הלוגו */
+  box-shadow: 0 24px 50px rgba(74, 59, 46, 0.2);
+}
+/* טבעת זהב מוסטת מאחורי הפורטרט */
+.meet-figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--gold);
+  border-radius: 200px 200px 26px 26px;
+  transform: translate(-16px, 16px);
+  opacity: 0.75;
+  z-index: 0;
+}
+.meet-badge {
+  position: absolute;
+  z-index: 2;
+  bottom: 26px;
+  inset-inline-end: -16px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--cream-bg);
+  border: 1px solid var(--sand);
+  box-shadow: 0 10px 24px rgba(74, 59, 46, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.meet-badge img { width: 52px; height: auto; }
+
+.meet-kicker {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  margin: 0 0 10px;
+}
+.meet-title {
+  font-size: clamp(2rem, 4.2vw, 2.9rem);
+  margin: 0 0 20px;
+}
+.meet-quote {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  max-width: 32em;
+  margin: 0 0 26px;
+  padding-inline-start: 20px;
+  border-inline-start: 3px solid var(--gold);
+}
+.meet-sign {
+  font-weight: 300;
+  font-size: 1.55rem;
+  color: var(--terracotta);
+  margin: 0 0 24px;
+}
+.meet-sign::before {
+  content: "— ";
+  color: var(--gold);
+}
+@media (min-width: 900px) {
+  .meet { padding: 88px 0; }
+  .meet-grid { grid-template-columns: 1.15fr 1fr; gap: 80px; }
+  .meet-figure { order: 0; width: min(100%, 420px); }
+}
+html.a11y-high-contrast .meet-figure::before { border-color: #000; }
+/* ===== Story – פתיחת עמוד אודות: טקסט + כרטיסים מוטים ===== */
+.story {
+  padding: 56px 0 64px;
+  background: var(--cream-bg);
+  overflow: hidden;
+}
+.story-grid {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+.story-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--ceramic);
+  color: var(--terracotta);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+}
+.story-tag span { color: var(--gold); }
+.story-title {
+  font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+  line-height: 1.1;
+  margin: 0 0 22px;
+}
+.story-lead {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  max-width: 32em;
+  margin: 0;
+}
+
+/* ערימת כרטיסים */
+.story-stack {
+  position: relative;
+  width: min(100%, 440px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+.story-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+}
+.story-card--back2 {
+  background: var(--sand);
+  transform: rotate(-6deg) scale(0.96);
+  opacity: 0.75;
+}
+.story-card--back1 {
+  background: var(--ceramic);
+  transform: rotate(4deg) scale(0.98);
+}
+.story-card--front {
+  background: var(--white);
+  box-shadow: 0 30px 70px rgba(74, 59, 46, 0.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 36px;
+}
+.story-avatar {
+  --av: clamp(200px, 22vw, 280px); /* גדול בדסקטופ, מתכווץ בכרטיס צר במובייל */
+  width: var(--av);
+  height: var(--av);
+  flex: 0 0 auto;
+  border-radius: 50%;
+  padding: 7px;
+  background: linear-gradient(135deg, var(--sand), var(--gold));
+  margin-bottom: 26px;
+}
+.story-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  border: 4px solid var(--white);
+}
+.story-name {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--terracotta);
+  margin: 0 0 6px;
+}
+.story-role {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--clay-dark);
+}
+@media (min-width: 900px) {
+  .story { padding: 80px 0 96px; }
+  .story-grid { grid-template-columns: 1fr 1fr; gap: 72px; }
+  .story-stack { width: min(100%, 460px); }
+}
+html.a11y-high-contrast .story-card--front { border: 2px solid #000; }
+
+/* ===== About hero – (לא בשימוש) ===== */
+.about-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--ceramic);
+}
+.about-hero-media { order: -1; } /* במובייל התמונה קודם */
+.about-hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 48vh;
+  object-fit: cover;
+  object-position: top;
+}
+.about-hero-panel {
+  display: flex;
+  align-items: center;
+  padding: 40px 24px 48px;
+}
+.about-hero-text {
+  position: relative;
+  max-width: 34em;
+  margin: 0 auto;
+}
+/* מירכאות זהב גדולות מאחורי הטקסט */
+.about-hero-text::before {
+  content: "\201D";
+  position: absolute;
+  top: -0.55em;
+  inset-inline-start: -0.1em;
+  font-size: 9rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--gold);
+  opacity: 0.22;
+  pointer-events: none;
+}
+.about-hero-title {
+  position: relative;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  margin: 0 0 20px;
+}
+.about-hero-quote {
+  position: relative;
+  font-size: 1.18rem;
+  line-height: 1.7;
+  margin: 0 0 26px;
+}
+.about-hero-sign {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding-top: 18px;
+  border-top: 2px solid var(--gold);
+  width: fit-content;
+  min-width: 14em;
+}
+.about-hero-name {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--terracotta);
+}
+.about-hero-role {
+  font-size: 0.9rem;
+  color: var(--clay-dark);
+}
+@media (min-width: 900px) {
+  .about-hero {
+    grid-template-columns: 1fr 1fr; /* פאנל טקסט מימין, תמונה משמאל עד קצה המסך */
+    min-height: 560px;
+  }
+  /* התמונה ממלאת בדיוק את גובה הפאנל – בלי רווחים מעל/מתחת */
+  .about-hero-media { order: 0; position: relative; min-height: 560px; }
+  .about-hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    object-position: 50% 15%;
+  }
+  .about-hero-panel { padding: 56px clamp(32px, 6vw, 96px); }
+  .about-hero-text { margin: 0; }
+}
+html.a11y-high-contrast .about-hero { background: #fff; }
+
+/* ===== "למה לבחור באור וחומר" – רשת בנטו עם תמונות ===== */
+.why-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+  margin-top: 8px;
+}
+.why-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid rgba(216, 192, 168, 0.55);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(74, 59, 46, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.why-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px rgba(74, 59, 46, 0.14);
+}
+.why-media { position: relative; }
+.why-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.why-num {
+  position: absolute;
+  top: 14px;
+  inset-inline-start: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(250, 246, 239, 0.94);
+  color: var(--terracotta);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+.why-body { padding: 20px 22px 24px; }
+.why-body h3 { margin: 0 0 0.4em; font-size: 1.2rem; }
+.why-body p { margin: 0; }
+@media (min-width: 700px) {
+  .why-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+@media (min-width: 900px) {
+  .why-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "a a b"
+      "c d d";
+    gap: 24px;
+  }
+  .why-card:nth-child(1) { grid-area: a; }
+  .why-card:nth-child(2) { grid-area: b; }
+  .why-card:nth-child(3) { grid-area: c; }
+  .why-card:nth-child(4) { grid-area: d; }
+  .why-card--wide .why-media img { aspect-ratio: 21 / 9; }
+  .why-card--wide .why-body { padding: 22px 26px 26px; }
+}
+html.a11y-high-contrast .why-card { border-color: #000; }
+
+/* ===== Feature list (למה לבחור באור וחומר) ===== */
+.feature-grid {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 700px) {
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+}
+.feature-item .feature-icon {
+  color: var(--gold);
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.feature-item h3 { margin-bottom: 0.3em; }
+
+/* ===== Split (image + text) ===== */
+.split {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+@media (min-width: 800px) {
+  .split { grid-template-columns: 1fr 1fr; }
+  .split.reverse .split-media { order: 2; }
+}
+.split-media img { border-radius: var(--radius-lg); }
+
+/* ===== Scroll strip (works images) ===== */
+.scroll-strip {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x proximity;
+}
+.scroll-strip img {
+  flex: 0 0 240px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  scroll-snap-align: start;
+}
+@media (min-width: 900px) {
+  .scroll-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+  }
+  .scroll-strip img { height: 180px; width: 100%; flex: unset; }
+}
+
+/* ===== Info box (details table) ===== */
+.info-box {
+  background: var(--ceramic);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.info-box table { width: 100%; border-collapse: collapse; }
+.info-box td { padding: 8px 4px; border-bottom: 1px solid var(--sand); }
+.info-box tr:last-child td { border-bottom: none; }
+.info-box td:first-child { font-weight: 600; color: var(--terracotta); width: 45%; }
+
+.callout {
+  background: var(--ceramic);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  font-size: 0.98rem;
+}
+
+/* ===== Courses – עמוד החוגים: פרקים בפאנלים מעוגלים ===== */
+.courses {
+  padding: 24px 12px 8px;
+  background: var(--cream-bg);
+}
+.course {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto 20px;
+  padding: 36px 0 44px;
+  background: var(--ceramic);
+  border-radius: 24px;
+  overflow: visible;
+}
+.course-grid {
+  display: grid;
+  gap: 26px;
+  grid-template-areas:
+    "head"
+    "media"
+    "body"
+    "card";
+}
+.course-head  { grid-area: head; }
+.course-media { grid-area: media; }
+.course-body  { grid-area: body; }
+.course-card  { grid-area: card; }
+
+/* מספור + תגית */
+.course-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.course-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.14em;
+}
+.course-num::after {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+  margin-inline-start: 10px;
+  vertical-align: middle;
+  opacity: 0.8;
+}
+/* תגית בסגנון הכפתורים באתר (טרקוטה, טקסט לבן, פינות 10px) */
+.course-chip {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  background: var(--terracotta);
+  color: var(--white);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.course-head h2 {
+  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+  line-height: 1.18;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+.course-lead {
+  font-size: 1.08rem;
+  max-width: 36em;
+  margin: 0;
+}
+
+/* קומפוזיציית תמונות: ראשית + אקסנט חופף */
+.course-media {
+  position: relative;
+  padding-bottom: 34px;
+}
+.photo-main,
+.photo-accent { margin: 0; }
+.photo-main {
+  position: relative;
+  width: 88%;
+  margin-inline-start: auto; /* נצמדת לצד הרחוק, משאירה מקום לאקסנט */
+}
+.photo-main::before {
+  content: "";
+  position: absolute;
+  inset: 14px -14px -14px 14px;
+  border: 2px solid var(--sand);
+  border-radius: 24px;
+  z-index: 0;
+}
+.photo-main img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: 0 22px 48px rgba(74, 59, 46, 0.2);
+}
+.photo-accent {
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 46%;
+  z-index: 2;
+}
+.photo-accent img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 6px solid var(--cream-bg);
+  box-shadow: 0 16px 34px rgba(74, 59, 46, 0.22);
+}
+
+/* גוף: תת-כותרת, רשימה, ציטוט */
+.course-subhead {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin: 0 0 12px;
+}
+.course-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.course-list li {
+  position: relative;
+  padding-inline-start: 24px;
+  line-height: 1.5;
+}
+.course-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 4px;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.course-callout {
+  margin: 20px 0 0;
+  padding: 2px 14px 2px 0;
+  border-inline-start: 3px solid var(--gold);
+  font-size: 1rem;
+}
+.course-quote {
+  position: relative;
+  margin: 0;
+  padding-top: 18px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--terracotta);
+  max-width: 24em;
+}
+.course-quote::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+
+/* כרטיס פרטים */
+.course-card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 18px;
+  padding: 22px 24px 24px;
+  box-shadow: 0 12px 30px rgba(74, 59, 46, 0.08);
+}
+.card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ceramic);
+}
+.price-num {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--terracotta);
+  line-height: 1;
+}
+.price-per { font-size: 0.95rem; color: var(--clay-dark); }
+.card-facts {
+  margin: 0;
+  display: grid;
+}
+.card-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--ceramic);
+}
+.card-facts dt {
+  font-size: 0.85rem;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex: 0 0 auto;
+}
+.card-facts dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: end; /* הערך נצמד לקצה השמאלי של הכרטיס */
+}
+/* שורה מודגשת בכרטיס (למשל שיעור ניסיון חינם) */
+.card-facts > .fact-highlight dt { color: var(--terracotta); }
+.card-facts > .fact-highlight dd {
+  color: var(--terracotta);
+  font-weight: 700;
+}
+.card-cta {
+  width: 100%;
+  margin-top: 18px;
+}
+
+/* דסקטופ: טקסט וכרטיס מצד אחד, תמונות מהצד השני; פרק שני מתהפך */
+@media (min-width: 900px) {
+  .courses { padding: 40px 20px 12px; }
+  .course { padding: 64px 0 72px; margin-bottom: 28px; border-radius: 30px; }
+  .course-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "head media"
+      "body media"
+      "card media";
+    column-gap: 64px;
+    row-gap: 28px;
+    align-items: start;
+  }
+  .course--alt .course-grid {
+    grid-template-areas:
+      "media head"
+      "media body"
+      "media card";
+  }
+  .course-media { align-self: start; position: sticky; top: 96px; }
+  .course-card { max-width: 480px; }
+}
+
+/* ===== Registration banner ===== */
+.registration-banner {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 120% at 100% 0%, rgba(255, 255, 255, 0.18), transparent 60%),
+    radial-gradient(50% 100% at 0% 100%, rgba(74, 59, 46, 0.18), transparent 60%),
+    var(--gold);
+  color: var(--white);
+  padding: 44px 20px;
+}
+.reg-inner {
+  display: grid;
+  gap: 18px;
+  text-align: center;
+}
+.registration-banner h2 {
+  color: var(--white);
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  margin-bottom: 0.3em;
+}
+.registration-banner p { margin: 0; font-size: 1.08rem; opacity: 0.95; }
+.registration-banner .btn-primary {
+  background: var(--white);
+  color: var(--terracotta);
+}
+.reg-cta { justify-self: center; }
+@media (min-width: 900px) {
+  .registration-banner { padding: 56px 20px; }
+  .reg-inner {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    text-align: start;
+  }
+  .reg-cta { justify-self: end; }
+}
+
+html.a11y-high-contrast .course { background: #fff; }
+html.a11y-high-contrast .course-card { border-color: #000; }
+html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
+
+/* ===== Steps (איך זה עובד) ===== */
+.steps {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  counter-reset: step;
+}
+@media (min-width: 700px) {
+  .steps { grid-template-columns: repeat(3, 1fr); }
+}
+.step {
+  text-align: center;
+  padding: 20px;
+}
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* ===== Contact page ===== */
+/* ===== עמוד צור קשר ===== */
+.contact-kicker {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+}
+.contact-kicker--light { color: var(--ceramic); }
+
+/* פתיחה */
+.contact-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 56px;
+  background:
+    radial-gradient(60% 70% at 15% 30%, rgba(232, 220, 196, 0.85), transparent 65%),
+    radial-gradient(45% 60% at 90% 90%, rgba(216, 192, 168, 0.45), transparent 60%),
+    var(--cream-bg);
+}
+.contact-hero-grid {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+.contact-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.05;
+  color: var(--terracotta);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.contact-lead {
+  font-size: 1.12rem;
+  max-width: 30em;
+  margin: 0 0 28px;
+}
+.channel-grid {
+  display: grid;
+  gap: 14px;
+}
+.channel {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "icon label"
+    "icon value"
+    "icon cta";
+  column-gap: 16px;
+  row-gap: 2px;
+  align-items: center;
+  padding: 18px 20px;
+  background: var(--white);
+  border: 1px solid rgba(216, 192, 168, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 10px 26px rgba(74, 59, 46, 0.07);
+  color: var(--clay-dark);
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.channel:hover,
+.channel:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(74, 59, 46, 0.14);
+  text-decoration: none;
+}
+.channel-icon {
+  grid-area: icon;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  transition: transform 0.25s ease;
+}
+.channel-icon svg { width: 28px; height: 28px; }
+.channel:hover .channel-icon { transform: scale(1.08) rotate(-6deg); }
+.channel--wa .channel-icon { background: #25D366; }
+.channel--tel .channel-icon { background: var(--terracotta); }
+.channel--wa:hover { border-color: rgba(37, 211, 102, 0.5); }
+.channel--tel:hover { border-color: rgba(156, 90, 46, 0.5); }
+.channel-label {
+  grid-area: label;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+.channel-value {
+  grid-area: value;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--clay-dark);
+  text-align: start;
+  unicode-bidi: isolate;
+}
+.channel-cta {
+  grid-area: cta;
+  font-weight: 700;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  color: var(--terracotta);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.channel-cta span { color: var(--gold); transition: transform 0.2s ease; }
+.channel:hover .channel-cta span { transform: translateX(-4px); }
+.channel--wa .channel-cta { color: #1a9e4c; }
+
+.contact-hero-visual {
+  position: relative;
+  display: none;
+}
+.contact-photo {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(74, 59, 46, 0.18);
+  aspect-ratio: 4 / 5;
+}
+.contact-photo img { width: 100%; height: 100%; object-fit: cover; }
+.contact-badge {
+  position: absolute;
+  bottom: -18px;
+  inset-inline-start: -18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 12px;
+  background: var(--white);
+  border-radius: 999px;
+  box-shadow: 0 12px 30px rgba(74, 59, 46, 0.16);
+  font-weight: 700;
+  color: var(--terracotta);
+}
+.contact-badge img { width: 40px; height: 40px; }
+
+/* הסטודיו + מפה */
+.contact-studio {
+  padding: 56px 0;
+  background: var(--white);
+}
+.contact-studio-grid {
+  display: grid;
+  gap: 32px;
+  align-items: stretch;
+}
+.studio-info h2 { margin-bottom: 18px; }
+.info-list { margin: 0 0 8px; display: grid; }
+.info-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ceramic);
+}
+.info-row dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  min-width: 9em;
+}
+.info-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--ceramic);
+  color: var(--terracotta);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+.info-icon svg { width: 18px; height: 18px; }
+.info-row dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.info-row dd a { font-weight: 700; text-decoration: none; }
+.info-row dd a:hover { text-decoration: underline; }
+.nav-links { margin-top: 22px; }
+
+.studio-map {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(74, 59, 46, 0.14);
+  border: 1px solid rgba(216, 192, 168, 0.6);
+  background: var(--white);
+  min-height: 320px;
+}
+.map-frame {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 300px;
+  aspect-ratio: 4 / 3;
+  border: 0;
+  display: block;
+  filter: saturate(0.85) contrast(1.02);
+}
+/* פס כתובת מתחת למפה (לא מעליה – כדי לא להסתיר את כרטיס Google) */
+.map-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--white);
+  border-top: 1px solid var(--ceramic);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--clay-dark);
+}
+.map-chip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  box-shadow: 0 0 0 4px rgba(156, 90, 46, 0.2);
+}
+
+/* מגיעה גם אליכם */
+.contact-onsite {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 0;
+  color: var(--white);
+  background:
+    radial-gradient(60% 90% at 100% 0%, rgba(176, 128, 58, 0.35), transparent 60%),
+    radial-gradient(40% 70% at 0% 100%, rgba(255, 255, 255, 0.06), transparent 60%),
+    var(--clay-dark);
+}
+.onsite-inner {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+.onsite-text h2 { color: var(--white); margin-bottom: 10px; }
+.onsite-text p { margin: 0 0 22px; font-size: 1.08rem; opacity: 0.95; }
+.city-chips-title {
+  margin: 0 0 14px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.city-chips-title::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+}
+/* רשת מסודרת של יישובים – תאים אחידים עם נקודת זהב */
+.city-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.city-chips li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-weight: 600;
+  font-size: 0.98rem;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.city-chips li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(176, 128, 58, 0.22);
+}
+.city-chips li:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(176, 128, 58, 0.7);
+  transform: translateY(-2px);
+}
+@media (min-width: 640px) {
+  .city-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+}
+
+@media (min-width: 640px) {
+  .channel-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  .contact-hero { padding: 64px 0 80px; }
+  .contact-hero-grid { grid-template-columns: 1.25fr 1fr; gap: 64px; }
+  .contact-hero-visual { display: block; max-width: 380px; justify-self: center; }
+  .contact-studio { padding: 80px 0; }
+  .contact-studio-grid { grid-template-columns: 1fr 1.15fr; gap: 56px; }
+  .studio-map { min-height: 100%; }
+  .contact-onsite { padding: 80px 0; }
+  .onsite-inner { grid-template-columns: 1fr 1.2fr; gap: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .channel, .channel-icon, .channel-cta span { transition: none; }
+  .channel:hover { transform: none; }
+}
+html.a11y-stop-motion .channel:hover { transform: none; }
+html.a11y-high-contrast .contact-hero,
+html.a11y-high-contrast .contact-studio { background: #fff; }
+html.a11y-high-contrast .channel { border-color: #000; }
+html.a11y-high-contrast .contact-onsite { background: #000; }
+html.a11y-high-contrast .city-chips li { border-color: #fff; }
+
+/* ===== Intro video (about) ===== */
+.intro-video {
+  display: block;
+  width: 100%;
+  max-height: 72vh;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  background: var(--clay-dark);
+  box-shadow: 0 18px 40px rgba(74, 59, 46, 0.18);
+  object-fit: contain;
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--clay-dark);
+  color: var(--cream-bg);
+  padding: 40px 0 96px; /* מרווח תחתון כדי שהכפתורים הצפים לא יכסו את שורת הקרדיט */
+}
+.site-footer a { color: var(--cream-bg); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.footer-brand img { height: 34px; }
+.footer-nav {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding: 0;
+  margin: 0 0 14px;
+  font-size: 0.88rem;
+}
+.footer-meta { font-size: 0.92rem; opacity: 0.9; margin: 0 0 16px; }
+.footer-bottom {
+  border-top: 1px solid rgba(250, 246, 239, 0.2);
+  padding-top: 16px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+}
+
+/* קרדיט בנייה ועיצוב בפוטר */
+.footer-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--white);
+  font-weight: 700;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--white);
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+a.footer-credit:hover,
+a.footer-credit:focus-visible { color: var(--white); border-bottom-color: #25D366; text-decoration: none; }
+.credit-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #25D366;
+  color: var(--white) !important;
+  flex: 0 0 22px;
+}
+.credit-wa:hover { background: #1EBE5A; text-decoration: none !important; }
+.credit-wa svg { width: 14px; height: 14px; }
+
+/* ===== הצהרת נגישות (עמוד צור קשר) – מקופלת, נפתחת בלחיצה ===== */
+.a11y-disclosure {
+  border-top: 1px solid var(--ceramic);
+  border-bottom: 1px solid var(--ceramic);
+  padding: 6px 0;
+}
+.a11y-disclosure summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 4px;
+}
+.a11y-disclosure summary::-webkit-details-marker { display: none; }
+.a11y-disclosure summary h2 { margin: 0; font-size: 1.35rem; }
+.a11y-disclosure summary::after {
+  content: "+";
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--gold);
+  flex: 0 0 auto;
+}
+.a11y-disclosure[open] summary::after { content: "−"; }
+.a11y-disclosure summary:hover h2 { color: var(--clay-dark); }
+.a11y-disclosure p { margin: 12px 4px 8px; }
+
+/* ===== עמוד הסדנאות ===== */
+/* פתיחה: לוח רחב יותר עם שני נתונים וכפתורים – שקוף יותר */
+.masthead-intro--wide {
+  max-width: 46em;
+  background: rgba(250, 246, 239, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.masthead-facts {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  text-align: start;
+}
+.masthead-facts li {
+  background: rgba(250, 246, 239, 0.75);
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mf-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+.mf-value { font-weight: 600; }
+/* הערה קטנה בסוגריים ליד כותרת אריח (למשל כתובת) */
+.mf-note {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--clay-dark);
+  letter-spacing: 0;
+}
+.masthead-actions {
+  justify-content: center;
+  margin-top: 20px;
+}
+@media (min-width: 600px) {
+  .masthead-facts { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+
+/* רשת פעילויות */
+.act-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+.act-card {
+  background: var(--white);
+  border: 1px solid var(--ceramic);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(74, 59, 46, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.act-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(74, 59, 46, 0.14);
+}
+.act-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.act-body { padding: 18px 20px 22px; }
+.act-num {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+}
+.act-body h3 { margin: 0 0 0.35em; font-size: 1.15rem; }
+/* מחיר בסוגריים בתוך כותרת כרטיס – קטן יותר */
+.act-price {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--clay-dark);
+  white-space: nowrap;
+}
+.act-body p { margin: 0; }
+@media (min-width: 600px) {
+  .act-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+@media (min-width: 900px) {
+  .act-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+}
+
+/* איך זה עובד – ציר שלבים */
+.how { background: var(--cream-bg); }
+.how-steps {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 22px;
+  position: relative;
+}
+.how-steps li {
+  text-align: center;
+  padding: 0 12px;
+}
+.how-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--gold);
+  color: var(--terracotta);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.how-steps h3 { margin: 0 0 0.3em; font-size: 1.15rem; }
+.how-steps p { margin: 0; }
+@media (min-width: 900px) {
+  .how-steps { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  /* קו מחבר בין העיגולים */
+  .how-steps::before {
+    content: "";
+    position: absolute;
+    top: 34px;
+    right: 16.6%;
+    left: 16.6%;
+    height: 2px;
+    background: var(--sand);
+  }
+}
+
+/* פאנל פנייה כהה */
+.cta-dark {
+  background:
+    radial-gradient(60% 120% at 100% 0%, rgba(176, 128, 58, 0.18), transparent 60%),
+    var(--clay-dark);
+  color: var(--cream-bg);
+  padding: 56px 0;
+}
+.cta-dark-inner { display: grid; gap: 26px; }
+.cta-dark h2 { color: var(--cream-bg); margin-bottom: 0.4em; }
+.cta-dark p { margin: 0 0 0.6em; max-width: 40em; }
+.cta-area {
+  font-size: 0.9rem;
+  opacity: 0.78;
+}
+.cta-dark-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cta-dark-actions .btn { width: 100%; }
+.btn-light {
+  background: var(--cream-bg);
+  color: var(--terracotta);
+}
+.btn-light:hover { background: var(--white); box-shadow: var(--shadow-soft); }
+@media (min-width: 900px) {
+  .cta-dark { padding: 72px 0; }
+  .cta-dark-inner { grid-template-columns: 1.5fr 1fr; align-items: center; gap: 56px; }
+}
+html.a11y-high-contrast .cta-dark { background: #000; }
+html.a11y-high-contrast .act-card { border-color: #000; }
+
+/* ===== WhatsApp floating button ===== */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366; /* ירוק וואטסאפ הרשמי */
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  z-index: 600;
+  text-decoration: none;
+}
+.whatsapp-fab:hover { background: #1EBE5A; }
+.whatsapp-fab svg { width: 28px; height: 28px; }
+
+/* ===== Accessibility widget ===== */
+.a11y-fab {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--clay-dark);
+  color: var(--cream-bg);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  z-index: 600;
+}
+
+/* קישור להצהרת הנגישות בתוך פאנל הנגישות */
+.a11y-panel-link {
+  display: block;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ceramic);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.a11y-panel {
+  position: fixed;
+  bottom: 84px;
+  left: 20px;
+  width: min(280px, calc(100vw - 40px));
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
+  z-index: 601;
+  display: none;
+}
+.a11y-panel.is-open { display: block; }
+.a11y-panel h2 {
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+.a11y-panel button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 6px;
+  border: 1px solid var(--ceramic);
+  border-radius: var(--radius);
+  background: var(--cream-bg);
+  color: var(--clay-dark);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-align: right;
+}
+.a11y-panel button:hover { background: var(--ceramic); }
+
+/* ===== Accessibility runtime states ===== */
+html.a11y-large-text { font-size: 118%; }
+html.a11y-high-contrast body {
+  background: #FFFFFF;
+  color: #000000;
+}
+html.a11y-high-contrast .site-header,
+html.a11y-high-contrast .site-footer { background: #000000; color: #FFFFFF; }
+html.a11y-high-contrast h1,
+html.a11y-high-contrast h2,
+html.a11y-high-contrast h3,
+html.a11y-high-contrast a { color: #000000; }
+html.a11y-high-contrast .site-footer a { color: #FFFFFF; }
+html.a11y-underline-links a { text-decoration-color: currentColor !important; }
+html.a11y-stop-motion *,
+html.a11y-stop-motion *::before,
+html.a11y-stop-motion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* ===== Utility ===== */
+.text-center { text-align: center; }
+.mt-0 { margin-top: 0; }
+.small-note { font-size: 0.9rem; opacity: 0.85; }
+.placeholder-note {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--terracotta);
+  font-weight: 600;
+}
+.img-fallback {
+  background: var(--ceramic);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--terracotta);
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  min-height: 160px;
+  border-radius: var(--radius);
+}
