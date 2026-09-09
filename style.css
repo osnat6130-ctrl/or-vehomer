@@ -1045,6 +1045,11 @@ html.a11y-high-contrast .meet-figure::before { border-color: #000; }
   .story-stack { width: min(100%, 460px); }
 }
 html.a11y-high-contrast .story-card--front { border: 2px solid #000; }
+/* עמוד אודות: אותה קשת עם טבעת זהב ולוגו כמו בדף הבית */
+.story-figure { order: 0; margin: 16px auto 0; }
+@media (min-width: 900px) {
+  .story-figure { width: min(100%, 420px); margin: 0 auto; }
+}
 
 /* ===== About hero – (לא בשימוש) ===== */
 .about-hero {
@@ -1904,6 +1909,10 @@ html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
   .city-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 }
 
+/* מובייל: המספר צמוד לימין, באותו קו עם הכותרת והכיתוב */
+@media (max-width: 639px) {
+  .channel-value { text-align: right; }
+}
 @media (min-width: 640px) {
   .channel-grid { grid-template-columns: 1fr 1fr; }
 }
