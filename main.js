@@ -81,4 +81,66 @@
     }
     img.addEventListener('error', function () { replaceBrokenImage(img); });
   });
+
+  /* ===== לייטבוקס לגלריות (.paint-gallery) – לחיצה על תמונה פותחת אותה בגדול ===== */
+  var galleryLinks = Array.prototype.slice.call(document.querySelectorAll('.paint-gallery .pg-link'));
+  if (galleryLinks.length) {
+    var lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'תצוגת תמונה מוגדלת');
+    lb.hidden = true;
+    lb.innerHTML =
+      '<button type="button" class="lb-close" aria-label="סגירה">&times;</button>' +
+      '<button type="button" class="lb-prev" aria-label="התמונה הקודמת">&#8250;</button>' +
+      '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-cap"></figcaption></figure>' +
+      '<button type="button" class="lb-next" aria-label="התמונה הבאה">&#8249;</button>';
+    document.body.appendChild(lb);
+
+    var lbImg = lb.querySelector('.lb-img');
+    var lbCap = lb.querySelector('.lb-cap');
+    var current = 0;
+    var lastFocus = null;
+
+    function showAt(i) {
+      current = (i + galleryLinks.length) % galleryLinks.length;
+      var link = galleryLinks[current];
+      var thumb = link.querySelector('img');
+      var cap = link.querySelector('.pg-cap');
+      lbImg.src = link.getAttribute('href');
+      lbImg.alt = thumb ? thumb.alt : '';
+      lbCap.textContent = cap ? cap.textContent : '';
+    }
+    function openLb(i, trigger) {
+      lastFocus = trigger || document.activeElement;
+      showAt(i);
+      lb.hidden = false;
+      document.body.classList.add('lb-open');
+      lb.querySelector('.lb-close').focus();
+    }
+    function closeLb() {
+      lb.hidden = true;
+      document.body.classList.remove('lb-open');
+      lbImg.src = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    galleryLinks.forEach(function (link, i) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        openLb(i, link);
+      });
+    });
+    lb.querySelector('.lb-close').addEventListener('click', closeLb);
+    lb.querySelector('.lb-prev').addEventListener('click', function () { showAt(current - 1); });
+    lb.querySelector('.lb-next').addEventListener('click', function () { showAt(current + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') closeLb();
+      else if (e.key === 'ArrowLeft') showAt(current + 1);  /* RTL: שמאלה = הבאה */
+      else if (e.key === 'ArrowRight') showAt(current - 1);
+    });
+  }
 })();
