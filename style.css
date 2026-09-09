@@ -2249,6 +2249,66 @@ a.footer-credit:focus-visible { color: var(--white); border-bottom-color: #25D36
 html.a11y-high-contrast .cta-dark { background: #000; }
 html.a11y-high-contrast .act-card { border-color: #000; }
 
+/* ===== צביעת קרמיקה – גלריית כלים לצביעה ===== */
+.paint-gallery-lead {
+  text-align: center;
+  max-width: 34em;
+  margin: -8px auto 28px;
+  color: var(--clay-dark);
+  opacity: 0.9;
+}
+.paint-gallery {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.paint-gallery li {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 3 / 4;
+}
+.paint-gallery li.pg-wide { grid-column: span 2; aspect-ratio: 4 / 3; }
+.paint-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.paint-gallery li:hover img { transform: scale(1.05); }
+.pg-cap {
+  position: absolute;
+  bottom: 10px;
+  inset-inline-start: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(250, 246, 239, 0.92);
+  color: var(--terracotta);
+  font-weight: 700;
+  font-size: 0.86rem;
+  box-shadow: 0 4px 14px rgba(74, 59, 46, 0.14);
+}
+@media (min-width: 700px) {
+  .paint-gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .paint-gallery li.pg-wide { grid-column: span 2; aspect-ratio: 4 / 3; }
+}
+@media (min-width: 1000px) {
+  /* 4 עמודות: 8 אריחים בודדים + 2 רחבים = 12 יחידות = 3 שורות מלאות, בלי חורים */
+  .paint-gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  .paint-gallery li.pg-wide { grid-column: span 2; aspect-ratio: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paint-gallery img { transition: none; }
+  .paint-gallery li:hover img { transform: none; }
+}
+html.a11y-stop-motion .paint-gallery li:hover img { transform: none; }
+
 /* ===== WhatsApp floating button ===== */
 .whatsapp-fab {
   position: fixed;
