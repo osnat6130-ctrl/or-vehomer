@@ -559,11 +559,14 @@ html.a11y-high-contrast .title-bold {
   .hero-v2-facts .fact-value { font-size: min(0.95rem, 3.5vw); line-height: 1.3; white-space: nowrap; }
   .label-full { display: none; }
   .label-short { display: inline; }
+  /* הכפתורים ברוחב זהה לאריחים – הטקסט מתכווץ מעט במסכים צרים כדי לא להישבר */
+  .hero-v2-bar .hero-v2-bar-actions .btn { padding: 11px 6px; gap: 5px; font-size: min(0.92rem, 3.7vw); }
+  .hero-v2-bar .hero-v2-bar-actions .btn-whatsapp::after { width: 1em; height: 1em; }
 }
 /* שני הכפתורים זה לצד זה בשורה אחת – גם במובייל */
 .hero-v2-bar-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* שני כפתורים ברוחב זהה – מיושרים לעמודות האריחים */
   gap: 10px;
 }
 .hero-v2-bar-actions .btn {
@@ -581,7 +584,7 @@ html.a11y-high-contrast .title-bold {
   .hero-v2-facts li .fact-label { font-size: 0.74rem; }
   .hero-v2-bar-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     min-width: 330px;
   }
