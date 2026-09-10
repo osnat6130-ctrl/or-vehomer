@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- כתובת GitHub Pages זמנית – להחליף לדומיין הסופי כשיהיה -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://osnat6130-ctrl.github.io/or-vehomer/index.html</loc><priority>1.0</priority></url>
-  <url><loc>https://osnat6130-ctrl.github.io/or-vehomer/hugim.html</loc><priority>0.9</priority></url>
-  <url><loc>https://osnat6130-ctrl.github.io/or-vehomer/sadnaot.html</loc><priority>0.9</priority></url>
-  <url><loc>https://osnat6130-ctrl.github.io/or-vehomer/painting.html</loc><priority>0.8</priority></url>
-  <url><loc>https://osnat6130-ctrl.github.io/or-vehomer/about.html</loc><priority>0.6</priority></url>
-  <url><loc>https://osnat6130-ctrl.github.io/or-vehomer/contact.html</loc><priority>0.7</priority></url>
+  <url><loc>https://orvahomer.co.il/</loc><priority>1.0</priority></url>
+  <url><loc>https://orvahomer.co.il/hugim.html</loc><priority>0.9</priority></url>
+  <url><loc>https://orvahomer.co.il/sadnaot.html</loc><priority>0.9</priority></url>
+  <url><loc>https://orvahomer.co.il/painting.html</loc><priority>0.8</priority></url>
+  <url><loc>https://orvahomer.co.il/about.html</loc><priority>0.6</priority></url>
+  <url><loc>https://orvahomer.co.il/contact.html</loc><priority>0.7</priority></url>
 </urlset>

@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# כתובת GitHub Pages זמנית – להחליף לדומיין הסופי כשיהיה
-Sitemap: https://osnat6130-ctrl.github.io/or-vehomer/sitemap.xml
+Sitemap: https://orvahomer.co.il/sitemap.xml
