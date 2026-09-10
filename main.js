@@ -82,6 +82,23 @@
     img.addEventListener('error', function () { replaceBrokenImage(img); });
   });
 
+  /* ===== פאנל ניהול: קוד העריכה נטען רק למי שנכנסה ב-/admin =====
+     לגולשת רגילה אין כאן שום בקשה לשרת ושום קוד נוסף. הסימון נשמר
+     ב-localStorage בכניסה; cms.js מאמת אותו מול השרת. */
+  function loadCms() {
+    if (document.getElementById('cms-script')) return;
+    var s = document.createElement('script');
+    s.id = 'cms-script';
+    s.src = '/cms/cms.js?v=20260910a';
+    document.body.appendChild(s);
+  }
+  try {
+    if (localStorage.getItem('ov-admin') === '1') loadCms();
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'ov-admin' && e.newValue === '1') loadCms();
+    });
+  } catch (e) { /* אחסון חסום - אין פאנל */ }
+
   /* ===== לייטבוקס לגלריות (.paint-gallery) – לחיצה על תמונה פותחת אותה בגדול ===== */
   var galleryLinks = Array.prototype.slice.call(document.querySelectorAll('.paint-gallery .pg-link'));
   if (galleryLinks.length) {

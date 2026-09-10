@@ -1,3 +1,7 @@
 .claude/
+node_modules/
+dist/
+.dev.vars
+.wrangler/
 Thumbs.db
 .DS_Store

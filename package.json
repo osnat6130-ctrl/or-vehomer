@@ -1,0 +1,20 @@
+{
+  "name": "or-vehomer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "אור וחומר – אתר סטטי + פאנל ניהול על Cloudflare Pages Functions",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "extract": "node scripts/extract-content.mjs",
+    "dev": "npm run build && npx wrangler pages dev dist --port 8788",
+    "hash-password": "node scripts/hash-password.mjs"
+  },
+  "dependencies": {
+    "node-html-parser": "^7.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250101.0"
+  }
+}

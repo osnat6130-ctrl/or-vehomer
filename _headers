@@ -1,0 +1,16 @@
+# כותרות שמוגשות על ידי Cloudflare Pages.
+
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/video/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# הפאנל לא אמור להופיע בתוצאות חיפוש
+/admin
+  X-Robots-Tag: noindex, nofollow
+/admin.html
+  X-Robots-Tag: noindex, nofollow
+
+/api/*
+  Cache-Control: no-store

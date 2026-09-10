@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>פאנל ניהול | אור וחומר</title>
+  <link rel="icon" href="images/logo-or-vehomer.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=20260910a">
+  <style>
+    .admin-wrap { min-height: 100vh; display: grid; place-items: center; padding: 40px 20px; background: var(--cream-bg); }
+    .admin-card { width: min(100%, 440px); background: var(--white); border-radius: 22px; padding: 32px 30px; box-shadow: 0 18px 44px rgba(74,59,46,.12); }
+    .admin-card h1 { font-size: 1.7rem; margin: 0 0 6px; }
+    .admin-card .sub { margin: 0 0 22px; color: var(--clay-dark); opacity: .8; }
+    .admin-card label { display: block; margin-bottom: 14px; font-weight: 600; }
+    .admin-card input[type="text"], .admin-card input[type="password"] {
+      width: 100%; margin-top: 6px; padding: 12px 14px; border: 1px solid var(--sand); border-radius: 12px; font-size: 1rem; background: var(--cream-bg);
+    }
+    .admin-card input:focus { outline: 3px solid rgba(156,90,46,.35); border-color: var(--terracotta); }
+    .admin-remember { display: flex; align-items: center; gap: 8px; font-weight: 500; margin-bottom: 18px; }
+    .admin-error { background: #fdecec; color: #8a1f1f; border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; font-weight: 600; }
+    .admin-card .btn { width: 100%; justify-content: center; }
+    .admin-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .admin-logo img { width: 44px; height: auto; }
+    .admin-back { display: block; text-align: center; margin-top: 16px; font-size: .92rem; }
+    .admin-help { font-size: .9rem; line-height: 1.55; color: var(--clay-dark); opacity: .85; margin: 0 0 18px; }
+  </style>
+</head>
+<body>
+  <main class="admin-wrap" id="main">
+    <div class="admin-card">
+      <div class="admin-logo">
+        <img src="/images/logo-or-vehomer.png" alt="">
+        <strong>אור וחומר</strong>
+      </div>
+      <h1>פאנל ניהול</h1>
+
+      <div id="signed-in" hidden>
+        <p class="sub">את מחוברת בתור <b id="me-name"></b>.</p>
+        <p class="admin-help">לחיצה על "התחלת עריכה" פותחת את האתר במצב עריכה: כל טקסט וכל תמונה מסומנים במסגרת מקווקווה, ולחיצה עליהם פותחת עריכה. בסיום לוחצים "שמירה ופרסום" בסרגל התחתון.</p>
+        <a class="btn btn-primary" id="start-edit" href="/">התחלת עריכה</a>
+        <a class="admin-back" href="#" id="logout">יציאה מהחשבון</a>
+      </div>
+
+      <form id="login-form">
+        <p class="sub">כניסה לעריכת האתר</p>
+        <label>שם משתמש
+          <input type="text" name="username" id="username" autocomplete="username" required>
+        </label>
+        <label>סיסמה
+          <input type="password" name="password" id="password" autocomplete="current-password" required>
+        </label>
+        <label class="admin-remember"><input type="checkbox" id="remember" checked> זכור אותי במחשב הזה</label>
+        <div class="admin-error" id="error" hidden></div>
+        <button class="btn btn-primary" type="submit" id="submit">כניסה</button>
+        <a class="admin-back" href="/">חזרה לאתר</a>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var FLAG = 'ov-admin', USER_KEY = 'ov-admin-user', EDIT_KEY = 'ov-editing';
+      var form = document.getElementById('login-form');
+      var signed = document.getElementById('signed-in');
+      var err = document.getElementById('error');
+      var submit = document.getElementById('submit');
+      var username = document.getElementById('username');
+      try { username.value = localStorage.getItem(USER_KEY) || ''; } catch (e) {}
+
+      function showSigned(name) {
+        document.getElementById('me-name').textContent = name;
+        form.hidden = true;
+        signed.hidden = false;
+      }
+
+      /* כבר מחוברת ("זכור אותי")? */
+      try {
+        if (localStorage.getItem(FLAG) === '1') {
+          fetch('/api/me', { credentials: 'same-origin' }).then(function (r) {
+            if (!r.ok) { localStorage.removeItem(FLAG); return; }
+            return r.json().then(function (m) { showSigned(m.name); });
+          }).catch(function () {});
+        }
+      } catch (e) {}
+
+      document.getElementById('start-edit').addEventListener('click', function () {
+        try { sessionStorage.setItem(EDIT_KEY, '1'); } catch (e) {}
+      });
+      document.getElementById('logout').addEventListener('click', function (e) {
+        e.preventDefault();
+        fetch('/api/logout', { method: 'POST', credentials: 'same-origin' }).finally(function () {
+          try { localStorage.removeItem(FLAG); } catch (e) {}
+          location.reload();
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.hidden = true;
+        submit.disabled = true;
+        submit.textContent = 'רגע...';
+        var remember = document.getElementById('remember').checked;
+        fetch('/api/login', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: username.value, password: document.getElementById('password').value, remember: remember })
+        }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (data) {
+            if (!r.ok) throw new Error(data.error || ('שגיאה ' + r.status));
+            try {
+              if (remember) localStorage.setItem(USER_KEY, username.value); else localStorage.removeItem(USER_KEY);
+              localStorage.setItem(FLAG, '1');
+              sessionStorage.setItem(EDIT_KEY, '1');
+            } catch (e) {}
+            location.href = '/';
+          });
+        }).catch(function (ex) {
+          err.textContent = ex.message || 'הכניסה נכשלה';
+          err.hidden = false;
+        }).finally(function () {
+          submit.disabled = false;
+          submit.textContent = 'כניסה';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

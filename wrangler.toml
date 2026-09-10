@@ -1,0 +1,13 @@
+name = "or-vehomer"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-09-01"
+
+# משתנים שאינם סודות. הסודות (SESSION_SECRET, ADMIN_USERS, GITHUB_TOKEN)
+# מוגדרים ב-Cloudflare: Settings -> Variables and secrets, כ-Secret.
+[vars]
+GITHUB_REPO = "osnat6130-ctrl/or-vehomer"
+GITHUB_BRANCH = "main"
+
+[env.preview.vars]
+GITHUB_REPO = "osnat6130-ctrl/or-vehomer"
+GITHUB_BRANCH = "main"
