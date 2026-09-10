@@ -9,8 +9,11 @@ export type AdminUser = { username: string; name: string; hash: string };
 
 export function loadUsers(env: Env): AdminUser[] {
   const parsed = JSON.parse(requireEnv(env, "ADMIN_USERS")) as unknown;
-  if (!Array.isArray(parsed)) throw new Error("ADMIN_USERS חייב להיות מערך JSON");
-  return parsed as AdminUser[];
+  /* ממשק הסודות של קלאודפלייר מוריד סוגריים מרובעים כשמדביקים קובץ .env,
+     ואז מגיעה לכאן משתמשת בודדת ולא מערך. מקבלים את שתי הצורות. */
+  const list = Array.isArray(parsed) ? parsed : parsed && typeof parsed === "object" ? [parsed] : null;
+  if (!list) throw new Error("ADMIN_USERS חייב להיות מערך JSON");
+  return list as AdminUser[];
 }
 
 /** מחזיר את המשתמשת אם שם המשתמש והסיסמה נכונים, אחרת null.
