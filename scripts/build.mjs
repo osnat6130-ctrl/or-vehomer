@@ -11,7 +11,9 @@ import { parse } from "node-html-parser";
 const DIST = "dist";
 const CONTENT = "content/site.json";
 const PAGES = ["index.html", "hugim.html", "sadnaot.html", "painting.html", "about.html", "contact.html", "admin.html"];
-const COPY = ["style.css", "main.js", "cms", "images", "video", "sitemap.xml", "robots.txt", "_headers"];
+/* 404.html חשוב: בלעדיו Cloudflare Pages מגישה את דף הבית (200) לכל
+   כתובת שלא קיימת, וזה גם מבלבל גולשים וגם מרעיל את מטמון ה-CDN */
+const COPY = ["style.css", "main.js", "cms", "images", "video", "sitemap.xml", "robots.txt", "_headers", "404.html"];
 
 const site = existsSync(CONTENT) ? JSON.parse(readFileSync(CONTENT, "utf8")) : {};
 

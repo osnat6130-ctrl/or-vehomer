@@ -9,6 +9,8 @@
 # הפאנל לא אמור להופיע בתוצאות חיפוש
 /admin
   X-Robots-Tag: noindex, nofollow
+/admin/*
+  X-Robots-Tag: noindex, nofollow
 /admin.html
   X-Robots-Tag: noindex, nofollow
 
