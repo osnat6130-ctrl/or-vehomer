@@ -11,23 +11,6 @@
     });
   }
 
-  /* מפת גוגל נטענת רק בלחיצה - עד אז שום פרט על הגולש לא מגיע לגוגל */
-  var mapBtn = document.getElementById('map-load');
-  if (mapBtn) {
-    mapBtn.addEventListener('click', function () {
-      var frame = document.createElement('iframe');
-      frame.className = 'map-frame';
-      frame.src = mapBtn.getAttribute('data-map-src');
-      frame.title = mapBtn.getAttribute('data-map-title');
-      frame.loading = 'lazy';
-      frame.allowFullscreen = true;
-      frame.referrerPolicy = 'no-referrer-when-downgrade';
-      var holder = document.getElementById('map-placeholder');
-      holder.parentNode.replaceChild(frame, holder);
-      frame.focus();
-    });
-  }
-
   var header = document.querySelector('.site-header');
   if (header && document.body.classList.contains('has-hero')) {
     var updateHeader = function () {

@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260916b">
+  <link rel="stylesheet" href="style.css?v=20260916c">
 </head>
 <body>
   <a class="skip-link" href="#main">דלגו לתוכן</a>
@@ -133,11 +133,7 @@
         </div>
 
         <div class="studio-map">
-          <!-- המפה של גוגל נטענת רק בלחיצה, כדי לא לשלוח את פרטי כל גולש לגוגל -->
-          <div class="map-placeholder" id="map-placeholder">
-            <p class="map-placeholder-text">המפה נטענת משירות של גוגל. בלחיצה על הכפתור היא תוצג כאן.</p>
-            <button class="btn btn-secondary" type="button" id="map-load" data-map-src="https://www.google.com/maps?q=%D7%93%D7%95%D7%90%D7%A0%D7%99+18+%D7%99%D7%91%D7%A0%D7%94&amp;output=embed" data-map-title="מפה – רחוב דואני 18, יבנה">הצגת המפה</button>
-          </div>
+          <iframe class="map-frame" src="https://www.google.com/maps?q=%D7%93%D7%95%D7%90%D7%A0%D7%99+18+%D7%99%D7%91%D7%A0%D7%94&output=embed" title="מפה – רחוב דואני 18, יבנה" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
           <div class="map-chip">
             <span class="map-chip-dot" aria-hidden="true"></span>
             <span data-cms="contact.studio.mapChip">רחוב דואני 18, יבנה</span>
@@ -229,6 +225,6 @@
     <a class="a11y-panel-link" href="accessibility.html">הצהרת נגישות</a>
   </div>
 
-  <script src="main.js?v=20260916b"></script>
+  <script src="main.js?v=20260916c"></script>
 </body>
 </html>

@@ -2570,22 +2570,6 @@ html.a11y-stop-motion *::after {
   font-size: 0.92rem;
 }
 
-/* מפה שנטענת בלחיצה: מציין מקום בגודל המפה */
-.map-placeholder {
-  display: grid;
-  place-content: center;
-  gap: 12px;
-  justify-items: center;
-  text-align: center;
-  min-height: 260px;
-  padding: 24px;
-  background: var(--ceramic);
-}
-.map-placeholder-text {
-  margin: 0;
-  max-width: 24em;
-  font-size: 0.95rem;
-}
 /* רצועת התמונות ניתנת לגלילה במקלדת */
 .scroll-strip:focus-visible {
   outline: 3px solid var(--terracotta);
