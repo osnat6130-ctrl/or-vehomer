@@ -8,8 +8,9 @@ import { isLocal, requireEnv, type Env } from "./env";
 
 export const COOKIE_NAME = "ov_admin";
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // שבוע
-/** "זכור אותי" - חצי שנה, כדי שהלקוחה לא תתחבר מחדש בכל עריכה */
-const REMEMBER_MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
+/** "זכור אותי" - חודש. ארוך מספיק שלא להתחבר בכל עריכה, וקצר מספיק
+ *  שעוגייה שדלפה לא תישאר בתוקף חצי שנה (אין רשימת ביטול). */
+const REMEMBER_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
 const encoder = new TextEncoder();
 
 export const maxAge = (remember: boolean) => (remember ? REMEMBER_MAX_AGE_SECONDS : MAX_AGE_SECONDS);
@@ -48,7 +49,16 @@ function parseCookies(header: string | null): Record<string, string> {
   for (const part of (header ?? "").split(";")) {
     const i = part.indexOf("=");
     if (i < 0) continue;
-    out[part.slice(0, i).trim()] = decodeURIComponent(part.slice(i + 1).trim());
+    const raw = part.slice(i + 1).trim();
+    /* ערך עוגייה פגום (למשל % בודד) זורק ב-decodeURIComponent. בלי
+       ה-try זה 500 במקום 401 על עוגייה לא תקינה. */
+    let value = raw;
+    try {
+      value = decodeURIComponent(raw);
+    } catch {
+      /* משאירים את הערך הגולמי - החתימה ממילא לא תתאים */
+    }
+    out[part.slice(0, i).trim()] = value;
   }
   return out;
 }

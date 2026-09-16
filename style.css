@@ -5,6 +5,7 @@
   --ceramic:    #E8DCC4;
   --sand:       #D8C0A8;
   --gold:       #B0803A;
+  --gold-text:  #8A6529; /* זהב כהה לטקסט — עומד ב-4.5:1 על קרם ועל לבן */
   --terracotta: #9C5A2E;
   --clay-dark:  #4A3B2E;
   --white:      #FFFFFF;
@@ -279,10 +280,10 @@ html.a11y-high-contrast .site-header.is-transparent { background: #000; }
 
 /* כפתור בירוק הרשמי של וואטסאפ */
 .btn-whatsapp {
-  background: #25D366;
+  background: #0F7A38;
   color: var(--white);
 }
-.btn-whatsapp:hover { background: #1EBE5A; box-shadow: var(--shadow-soft); }
+.btn-whatsapp:hover { background: #0C6630; box-shadow: var(--shadow-soft); }
 /* אייקון וואטסאפ בכל כפתורי הפעולה הירוקים (בצד שמאל של הטקסט, כמו אייקון הטלפון בכותרת) */
 .btn-whatsapp::after {
   content: "";
@@ -308,7 +309,7 @@ html.a11y-high-contrast .btn-whatsapp { background: #000; color: #fff; }
 .section-narrow { max-width: 760px; margin: 0 auto; text-align: center; }
 
 .eyebrow {
-  color: var(--gold);
+  color: var(--gold-text);
   font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: 0.02em;
@@ -345,7 +346,7 @@ html.a11y-high-contrast .btn-whatsapp { background: #000; color: #fff; }
   margin-bottom: 0.6em;
 }
 .hero-tagline {
-  color: var(--gold);
+  color: var(--gold-text);
   font-size: 1.65rem;
   font-weight: 700;
   margin-bottom: 0.8em;
@@ -684,7 +685,18 @@ html.a11y-high-contrast .masthead-intro {
 @media (min-width: 900px) {
   .masthead { padding: 64px 0 56px; }
 }
-/* דף הסדנאות: הכותרת בלבן, עם צל עדין לקריאות מעל הפאנל השקוף */
+/* דף הסדנאות: הכותרת נשארת לבנה, והלוח שמאחוריה כהה כדי שהטקסט ייקרא
+   (לוח קרם שקוף מעל צילום שקיעה נתן ניגודיות של 1.2:1 בלבד) */
+.masthead--sadnaot .masthead-intro--wide {
+  background: rgba(48, 38, 29, 0.72);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+/* אריחי הנתונים נשארים בהירים, אבל אטומים - שקיפות מעל לוח כהה
+   הורידה את הניגודיות של הטקסט שבתוכם מתחת לתקן */
+.masthead--sadnaot .masthead-facts li {
+  background: var(--cream-bg);
+  border-color: var(--sand);
+}
 .masthead--sadnaot .masthead-title {
   color: var(--white);
   text-shadow: 0 2px 14px rgba(59, 46, 35, 0.45), 0 1px 2px rgba(59, 46, 35, 0.35);
@@ -803,7 +815,7 @@ html.a11y-stop-motion .card--link:hover img { transform: none; }
   align-items: center;
 }
 .intro-kicker {
-  color: var(--gold);
+  color: var(--gold-text);
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.12em;
@@ -933,7 +945,7 @@ html.a11y-high-contrast .intro-stats li { border-color: #000; }
 .meet-badge img { width: 52px; height: auto; }
 
 .meet-kicker {
-  color: var(--gold);
+  color: var(--gold-text);
   font-weight: 700;
   font-size: 0.88rem;
   letter-spacing: 0.12em;
@@ -990,7 +1002,7 @@ html.a11y-high-contrast .meet-figure::before { border-color: #000; }
   font-size: 0.9rem;
   margin: 0 0 20px;
 }
-.story-tag span { color: var(--gold); }
+.story-tag span { color: var(--gold-text); }
 .story-title {
   font-size: clamp(2.4rem, 5.2vw, 3.8rem);
   line-height: 1.1;
@@ -1342,7 +1354,7 @@ html.a11y-high-contrast .why-card { border-color: #000; }
 .course-num {
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold-text);
   letter-spacing: 0.14em;
 }
 .course-num::after {
@@ -1426,7 +1438,7 @@ html.a11y-high-contrast .why-card { border-color: #000; }
 .course-subhead {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold-text);
   letter-spacing: 0.08em;
   margin: 0 0 12px;
 }
@@ -1514,7 +1526,7 @@ html.a11y-high-contrast .why-card { border-color: #000; }
 }
 .card-facts dt {
   font-size: 0.85rem;
-  color: var(--gold);
+  color: var(--gold-text);
   font-weight: 700;
   letter-spacing: 0.04em;
   flex: 0 0 auto;
@@ -1632,7 +1644,7 @@ html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
 /* ===== Contact page ===== */
 /* ===== עמוד צור קשר ===== */
 .contact-kicker {
-  color: var(--gold);
+  color: var(--gold-text);
   font-weight: 700;
   font-size: 0.88rem;
   letter-spacing: 0.08em;
@@ -1709,7 +1721,7 @@ html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
 }
 .channel-icon svg { width: 28px; height: 28px; }
 .channel:hover .channel-icon { transform: scale(1.08) rotate(-6deg); }
-.channel--wa .channel-icon { background: #25D366; }
+.channel--wa .channel-icon { background: #0F7A38; }
 .channel--tel .channel-icon { background: var(--terracotta); }
 .channel--wa:hover { border-color: rgba(37, 211, 102, 0.5); }
 .channel--tel:hover { border-color: rgba(156, 90, 46, 0.5); }
@@ -1718,7 +1730,7 @@ html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .channel-value {
   grid-area: value;
@@ -1797,7 +1809,7 @@ html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
   gap: 10px;
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold-text);
   letter-spacing: 0.03em;
   min-width: 9em;
 }
@@ -2101,7 +2113,7 @@ a.footer-credit:focus-visible { color: var(--white); border-bottom-color: #25D36
 .mf-label {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold-text);
   letter-spacing: 0.06em;
 }
 .mf-value { font-weight: 600; }
@@ -2149,7 +2161,7 @@ a.footer-credit:focus-visible { color: var(--white); border-bottom-color: #25D36
   display: block;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold-text);
   letter-spacing: 0.14em;
   margin-bottom: 6px;
 }
@@ -2390,7 +2402,7 @@ body.lb-open { overflow: hidden; }
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: #25D366; /* ירוק וואטסאפ הרשמי */
+  background: #0F7A38; /* ירוק וואטסאפ מוכהה לניגודיות תקינה */
   color: var(--white);
   display: flex;
   align-items: center;
@@ -2399,7 +2411,7 @@ body.lb-open { overflow: hidden; }
   z-index: 600;
   text-decoration: none;
 }
-.whatsapp-fab:hover { background: #1EBE5A; }
+.whatsapp-fab:hover { background: #0C6630; }
 .whatsapp-fab svg { width: 28px; height: 28px; }
 
 /* ===== Accessibility widget ===== */
@@ -2509,4 +2521,75 @@ html.a11y-stop-motion *::after {
   padding: 10px;
   min-height: 160px;
   border-radius: var(--radius);
+}
+
+/* ===== עמודי מסמך: הצהרת נגישות ומדיניות פרטיות ===== */
+.legal-doc {
+  max-width: 46em;
+}
+.legal-doc h2 {
+  font-size: 1.25rem;
+  color: var(--terracotta);
+  margin: 1.8em 0 0.5em;
+  padding-top: 0.2em;
+  border-top: 1px solid var(--ceramic);
+}
+.legal-doc h2:first-of-type { margin-top: 0.4em; border-top: 0; padding-top: 0; }
+.legal-doc p { margin: 0 0 0.9em; line-height: 1.75; }
+.legal-list {
+  margin: 0 0 1.1em;
+  padding-inline-start: 1.15em;
+}
+.legal-list li { margin-bottom: 0.55em; line-height: 1.7; }
+.legal-note {
+  background: var(--cream-bg);
+  border-inline-start: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+}
+.legal-updated {
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 1px solid var(--ceramic);
+  font-size: 0.92rem;
+  color: var(--clay-dark);
+  opacity: 0.85;
+}
+/* שורת הקישורים המשפטיים בפוטר */
+.footer-legal {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 0.92rem;
+}
+
+/* מפה שנטענת בלחיצה: מציין מקום בגודל המפה */
+.map-placeholder {
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+  min-height: 260px;
+  padding: 24px;
+  background: var(--ceramic);
+}
+.map-placeholder-text {
+  margin: 0;
+  max-width: 24em;
+  font-size: 0.95rem;
+}
+/* רצועת התמונות ניתנת לגלילה במקלדת */
+.scroll-strip:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 3px;
+}
+/* אזור מגע תקני לכפתור התפריט */
+.nav-toggle {
+  min-width: 44px;
+  min-height: 44px;
 }

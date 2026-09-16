@@ -7,6 +7,24 @@
     navToggle.addEventListener('click', function () {
       var open = navMenu.classList.toggle('is-open');
       navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'סגירת תפריט' : 'פתיחת תפריט');
+    });
+  }
+
+  /* מפת גוגל נטענת רק בלחיצה - עד אז שום פרט על הגולש לא מגיע לגוגל */
+  var mapBtn = document.getElementById('map-load');
+  if (mapBtn) {
+    mapBtn.addEventListener('click', function () {
+      var frame = document.createElement('iframe');
+      frame.className = 'map-frame';
+      frame.src = mapBtn.getAttribute('data-map-src');
+      frame.title = mapBtn.getAttribute('data-map-title');
+      frame.loading = 'lazy';
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = 'no-referrer-when-downgrade';
+      var holder = document.getElementById('map-placeholder');
+      holder.parentNode.replaceChild(frame, holder);
+      frame.focus();
     });
   }
 
@@ -111,7 +129,7 @@
     lb.innerHTML =
       '<button type="button" class="lb-close" aria-label="סגירה">&times;</button>' +
       '<button type="button" class="lb-prev" aria-label="התמונה הקודמת">&#8250;</button>' +
-      '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-cap"></figcaption></figure>' +
+      '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-cap" role="status" aria-live="polite"></figcaption></figure>' +
       '<button type="button" class="lb-next" aria-label="התמונה הבאה">&#8249;</button>';
     document.body.appendChild(lb);
 
@@ -129,16 +147,29 @@
       lbImg.alt = thumb ? thumb.alt : '';
       lbCap.textContent = cap ? cap.textContent : '';
     }
+    /* שאר העמוד מנוטרל כשהלייטבוקס פתוח, אחרת Tab יוצא ממנו אל
+       התוכן שמאחור והמשתמש מאבד את ההקשר. */
+    function outsideParts() {
+      return Array.prototype.slice.call(document.querySelectorAll('header, main, footer, .a11y-fab, .a11y-panel, .whatsapp-fab'));
+    }
+    function setOutsideHidden(on) {
+      outsideParts().forEach(function (el) {
+        if (on) { el.setAttribute('inert', ''); el.setAttribute('aria-hidden', 'true'); }
+        else { el.removeAttribute('inert'); el.removeAttribute('aria-hidden'); }
+      });
+    }
     function openLb(i, trigger) {
       lastFocus = trigger || document.activeElement;
       showAt(i);
       lb.hidden = false;
       document.body.classList.add('lb-open');
+      setOutsideHidden(true);
       lb.querySelector('.lb-close').focus();
     }
     function closeLb() {
       lb.hidden = true;
       document.body.classList.remove('lb-open');
+      setOutsideHidden(false);
       lbImg.src = '';
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
@@ -158,6 +189,13 @@
       if (e.key === 'Escape') closeLb();
       else if (e.key === 'ArrowLeft') showAt(current + 1);  /* RTL: שמאלה = הבאה */
       else if (e.key === 'ArrowRight') showAt(current - 1);
+      else if (e.key === 'Tab') {
+        var focusables = lb.querySelectorAll('button');
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
   }
 })();

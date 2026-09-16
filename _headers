@@ -1,3 +1,15 @@
+# הגנות בסיסיות לכל האתר.
+# frame-ancestors + X-Frame-Options: שאתר זר לא יוכל להטמיע את דף
+# ההתחברות של הפאנל ולהטעות לחיצות. ה-CSP מתיר רק את מה שהאתר באמת
+# טוען: פונטים של גוגל, המפה, ותמונות/סרטונים מאותו מקור.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-src https://www.google.com
+
 # כותרות שמוגשות על ידי Cloudflare Pages.
 
 /images/*

@@ -5,15 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>צור קשר | אור וחומר, דואני 18 יבנה</title>
   <meta name="description" content="צרו קשר עם אור וחומר – סטודיו לקרמיקה ביבנה, רחוב דואני 18. טלפון ווואטסאפ לפרטים על חוגי קרמיקה וסדנאות. מגיעים גם אליכם עד כחצי שעה נסיעה מיבנה.">
+  <link rel="canonical" href="https://orvahomer.co.il/contact">
+  <meta property="og:url" content="https://orvahomer.co.il/contact">
+  <meta property="og:site_name" content="אור וחומר">
+  <meta property="og:locale" content="he_IL">
+  <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
   <meta property="og:title" content="צור קשר | אור וחומר, דואני 18 יבנה">
   <meta property="og:description" content="טלפון, וואטסאפ וכתובת הסטודיו ביבנה. מגיעים גם אליכם.">
-  <meta property="og:image" content="images/logo-or-vehomer.png">
+  <meta property="og:image" content="https://orvahomer.co.il/images/logo-or-vehomer.png">
   <link rel="icon" href="images/logo-or-vehomer.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260909e">
+  <link rel="stylesheet" href="style.css?v=20260916a">
 </head>
 <body>
   <a class="skip-link" href="#main">דלגו לתוכן</a>
@@ -128,7 +133,11 @@
         </div>
 
         <div class="studio-map">
-          <iframe class="map-frame" src="https://www.google.com/maps?q=%D7%93%D7%95%D7%90%D7%A0%D7%99+18+%D7%99%D7%91%D7%A0%D7%94&output=embed" title="מפה – רחוב דואני 18, יבנה" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <!-- המפה של גוגל נטענת רק בלחיצה, כדי לא לשלוח את פרטי כל גולש לגוגל -->
+          <div class="map-placeholder" id="map-placeholder">
+            <p class="map-placeholder-text">המפה נטענת משירות של גוגל. בלחיצה על הכפתור היא תוצג כאן.</p>
+            <button class="btn btn-secondary" type="button" id="map-load" data-map-src="https://www.google.com/maps?q=%D7%93%D7%95%D7%90%D7%A0%D7%99+18+%D7%99%D7%91%D7%A0%D7%94&amp;output=embed" data-map-title="מפה – רחוב דואני 18, יבנה">הצגת המפה</button>
+          </div>
           <div class="map-chip">
             <span class="map-chip-dot" aria-hidden="true"></span>
             <span data-cms="contact.studio.mapChip">רחוב דואני 18, יבנה</span>
@@ -157,11 +166,14 @@
 
     <section class="section" aria-labelledby="a11y-title">
       <div class="container section-narrow">
-        <details class="a11y-disclosure" id="accessibility">
-          <summary><h2 id="a11y-title" data-cms="contact.a11y.title">הצהרת נגישות</h2></summary>
-          <p data-cms="contact.a11y.text">אנחנו באור וחומר רואים חשיבות בהנגשת האתר לכלל הגולשים, כולל אנשים עם מוגבלויות. האתר נבנה עם ניווט מלא במקלדת, ניגודיות צבעים תקינה, תיאור טקסטואלי לתמונות, ותפריט נגישות שמאפשר הגדלת טקסט, ניגודיות גבוהה, הדגשת קישורים ועצירת אנימציות.</p>
-          <p>נתקלתם בקושי בגלישה באתר? נשמח שתספרו לנו בטלפון <a href="tel:+972547848117">054-784-8117</a> או בוואטסאפ, ונטפל בזה.</p>
-        </details>
+        <div class="a11y-links" id="accessibility">
+          <h2 data-cms="contact.a11y.title">נגישות ופרטיות</h2>
+          <p data-cms="contact.a11y.text">אנחנו באור וחומר רוצים שכל אחת ואחד יוכלו לגלוש כאן בנוחות, ולא אוספים עליכם שום מידע באתר.</p>
+          <p class="btn-row">
+            <a class="btn btn-secondary" href="accessibility.html">הצהרת נגישות</a>
+            <a class="btn btn-secondary" href="privacy.html">מדיניות פרטיות</a>
+          </p>
+        </div>
       </div>
     </section>
 
@@ -184,6 +196,10 @@
         <li><a href="painting.html">צביעת קרמיקה</a></li>
         <li><a href="about.html">אודות</a></li>
         <li><a href="contact.html">צור קשר</a></li>
+      </ul>
+      <ul class="footer-legal">
+        <li><a href="accessibility.html">הצהרת נגישות</a></li>
+        <li><a href="privacy.html">מדיניות פרטיות</a></li>
       </ul>
       <div class="footer-bottom">
         <span data-cms="shared.footer.copyright">© אור וחומר 2026</span>
@@ -210,9 +226,9 @@
     <button type="button" data-a11y="underline-links" aria-pressed="false">הדגשת קישורים</button>
     <button type="button" data-a11y="stop-motion" aria-pressed="false">עצירת אנימציות</button>
     <button type="button" data-a11y="reset">איפוס</button>
-    <a class="a11y-panel-link" href="contact.html#accessibility">הצהרת נגישות</a>
+    <a class="a11y-panel-link" href="accessibility.html">הצהרת נגישות</a>
   </div>
 
-  <script src="main.js?v=20260909e"></script>
+  <script src="main.js?v=20260916a"></script>
 </body>
 </html>
