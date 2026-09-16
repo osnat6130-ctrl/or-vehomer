@@ -23,6 +23,29 @@
   var a11yFab = document.querySelector('.a11y-fab');
   var a11yPanel = document.getElementById('a11y-panel');
   var A11Y_CLASSES = ['a11y-large-text', 'a11y-high-contrast', 'a11y-underline-links', 'a11y-stop-motion'];
+  var A11Y_STORE = 'ov-a11y';
+
+  /* ההגדרות נשמרות בדפדפן, אחרת הן מתאפסות בכל מעבר לעמוד אחר
+     ומי שהדליק ניגודיות גבוהה מאבד אותה בלחיצה הראשונה על התפריט. */
+  function saveA11y() {
+    try {
+      var on = A11Y_CLASSES.filter(function (c) { return root.classList.contains(c); });
+      if (on.length) localStorage.setItem(A11Y_STORE, on.join(' '));
+      else localStorage.removeItem(A11Y_STORE);
+    } catch (e) { /* אחסון חסום */ }
+  }
+  function restoreA11y() {
+    var saved;
+    try { saved = localStorage.getItem(A11Y_STORE); } catch (e) { return; }
+    if (!saved) return;
+    saved.split(' ').forEach(function (c) {
+      if (A11Y_CLASSES.indexOf(c) < 0) return;
+      root.classList.add(c);
+      var btn = document.querySelector('[data-a11y="' + c.replace('a11y-', '') + '"]');
+      if (btn) btn.setAttribute('aria-pressed', 'true');
+    });
+  }
+  restoreA11y();
 
   if (a11yFab && a11yPanel) {
     a11yFab.addEventListener('click', function () {
@@ -52,11 +75,13 @@
         a11yPanel.querySelectorAll('[aria-pressed]').forEach(function (b) {
           b.setAttribute('aria-pressed', 'false');
         });
+        saveA11y();
         return;
       }
 
       var on = root.classList.toggle('a11y-' + action);
       btn.setAttribute('aria-pressed', String(on));
+      saveA11y();
     });
   }
 

@@ -37,7 +37,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 17px;
+  font-size: 1.0625rem; /* ברם ולא בפיקסלים, אחרת "הגדלת טקסט" לא משפיעה */
   line-height: 1.65;
   color: var(--clay-dark);
   background: var(--cream-bg);
@@ -498,7 +498,7 @@ html.a11y-high-contrast .title-bold {
   filter: none;
 }
 .hero-v2-tagline {
-  color: var(--gold);
+  color: var(--ceramic);
   font-size: clamp(1.45rem, 3vw, 2.1rem);
   font-weight: 600;
   margin-bottom: 1.1em;
@@ -642,7 +642,7 @@ html.a11y-high-contrast .title-bold {
   margin: 0 auto;
   padding: 26px 28px 28px;
   border-radius: var(--radius-lg);
-  background: rgba(250, 246, 239, 0.72);
+  background: rgba(250, 246, 239, 0.88);
   border: 1px solid rgba(250, 246, 239, 0.6);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
@@ -1579,9 +1579,8 @@ html.a11y-high-contrast .why-card { border-color: #000; }
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(60% 120% at 100% 0%, rgba(255, 255, 255, 0.18), transparent 60%),
     radial-gradient(50% 100% at 0% 100%, rgba(74, 59, 46, 0.18), transparent 60%),
-    var(--gold);
+    var(--terracotta);
   color: var(--white);
   padding: 44px 20px;
 }
@@ -1756,7 +1755,7 @@ html.a11y-high-contrast .course-chip { background: #000; color: #fff; }
 }
 .channel-cta span { color: var(--gold); transition: transform 0.2s ease; }
 .channel:hover .channel-cta span { transform: translateX(-4px); }
-.channel--wa .channel-cta { color: #1a9e4c; }
+.channel--wa .channel-cta { color: #0F7A38; }
 
 .contact-hero-visual {
   position: relative;
