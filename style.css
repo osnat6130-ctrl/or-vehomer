@@ -2574,17 +2574,3 @@ html.a11y-stop-motion *::after {
   outline: 3px solid var(--terracotta);
   outline-offset: 3px;
 }
-
-/* ציון מע"מ ליד מחיר. חובת גילוי צרכנית: המחיר המוצג ללקוח פרטי
-   הוא המחיר הסופי שהוא משלם. */
-.price-vat {
-  display: block;
-  margin-top: 4px;
-  font-size: 0.8rem;
-  color: var(--clay-dark);
-  opacity: 0.8;
-}
-.price-vat--section {
-  text-align: center;
-  margin: -6px 0 22px;
-}
